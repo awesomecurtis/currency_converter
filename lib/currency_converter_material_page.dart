@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
 
-class CurrencyConverterMaterialPage extends StatelessWidget {
+class CurrencyConverterMaterialPage extends StatefulWidget {
   const CurrencyConverterMaterialPage({super.key});
+
+  @override
+  State<CurrencyConverterMaterialPage> createState() =>
+      _CurrencyConverterMaterialPageState();
+}
+
+class _CurrencyConverterMaterialPageState
+    extends State<CurrencyConverterMaterialPage> {
+  double result = 0;
+  final TextEditingController amountEditingController = TextEditingController();
+
+  void convert() {
+    result = double.parse(amountEditingController.text) * 12;
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    amountEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +35,11 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.grey,
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.black87,
         title: const Text(
-          'Currency Converter',
+          'USD to GHC Converter',
           style: TextStyle(color: Colors.amber),
         ),
         centerTitle: true,
@@ -28,15 +49,16 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              '0',
-              style: TextStyle(
+            Text(
+              'GHC ${result != 0 ? result.toStringAsFixed(2) : result.toStringAsFixed(0)}',
+              style: const TextStyle(
                 fontSize: 55,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
             TextField(
+              controller: amountEditingController,
               style: const TextStyle(
                 color: Colors.black,
               ),
@@ -58,10 +80,11 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ElevatedButton(
-              onPressed: null,
+              //invoke convert function
+              onPressed: convert,
               style: TextButton.styleFrom(
                 backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
+                foregroundColor: Colors.amber,
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -70,7 +93,7 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
               child: const Text(
                 'Convert',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.amber,
                 ),
               ),
             ),
